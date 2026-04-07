@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PP-to-ePHASORSIM"
+version = "0.1.0"
+description = "Konverter zur vereinfachter Umwandlung von pandapower-Netzmodellen zu ePHASORSIM-Netzmodellen für einen OP4510 V2 (Echtzeitsimulator von OPAL-RT) mit zusätzlicher möglicher Pin-Konfiguration"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.3.5",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.3",
+    "pandapower>=3.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools]
+packages = ["NetConverter"]

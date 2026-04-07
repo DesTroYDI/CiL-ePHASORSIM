@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "CiL-Konfiguratior",
+    "Projects": [
+      {
+        "Path": "C-HiL.pyproj",
+        "Action": "Start"
+      }
+    ]
+  },
+  {
+    "Name": "Neues Profil",
+    "Projects": [
+      {
+        "Path": "C-HiL.pyproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

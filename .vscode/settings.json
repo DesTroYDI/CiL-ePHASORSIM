@@ -1,0 +1,29 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/CiL",
+        "${workspaceFolder}/CiL/configuration",
+        "${workspaceFolder}/CiL/configuration/NetConverter",
+        "${workspaceFolder}/CiL/configuration/ProfileGenerator"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+    "python-envs.pythonProjects": [
+        {
+            "path": "CiL",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        },
+        {
+            "path": "CiL/configuration/NetConverter",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
+}

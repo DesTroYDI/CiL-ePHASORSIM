@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CiL-Core"
+version = "0.1.0"
+description = "Implementierung des Controllers für die CiL"
+requires-python = ">=3.13"
+dependencies = [
+    "dearpygui>=2.1.1",
+    "openpyxl>=3.1.5",
+    "pandapower>=3.3.0",
+    "pymodbus>=3.11.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools]
+packages = ["CiL"]
