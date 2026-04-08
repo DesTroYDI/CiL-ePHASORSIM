@@ -260,7 +260,7 @@ sequenceDiagram
     par Read all Modbus-TCP Values
         GUI->>CTRL: read_all(ReadMode.MODBUS)
         CTRL->>ELEM: read_async(mode) for all grid elements
-        parallel read for grid elements
+        par parallel read for grid elements
             ELEM->>MB: await read()
             MB->>RT: Modbus-Function Code 1/2/3/4
             RT-->>MB: Register / Coil / Input
