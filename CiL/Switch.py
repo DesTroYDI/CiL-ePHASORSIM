@@ -17,12 +17,12 @@ class Switch(IModbusElement):
         - **PandaPower mapping**: ``switch`` DataFrame with ``closed``
     """
     # --------------------------------------------------------------------------------------------------------
-    # Klassenvariablen
+    # Class variables
     df_pp = "switch"
     LIST_VALUE_KEYS: list[str] = ["closed"]
     
     # --------------------------------------------------------------------------------------------------------
-    # Komponentenmethoden
+    # Component methods
     @property
     def value(self) -> bool:
         """Returns the switching state as a boolean value."""
@@ -34,7 +34,7 @@ class Switch(IModbusElement):
         return ""
     
     # --------------------------------------------------------------------------------------------------------
-    # Interne Methoden
+    # Internal methods
     def __repr__(self):
         """Creates a compact text representation of the switch.
 

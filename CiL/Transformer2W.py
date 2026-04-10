@@ -28,22 +28,22 @@ class Transformer2W(IModbusElement):
         - **PandaPower mapping**: ``trafo`` DataFrame with ``loading_percent``, ``tap_pos``, ``tap_step_percent``, ``tap_neutral``, ``tap_min``, ``tap_max``, ``tap_side``
     """
     # --------------------------------------------------------------------------------------------------------
-    # Klassenvariablen
+    # Class variables
     df_pp = "trafo"
     LIST_VALUE_KEYS: list[str] = ["loading_percent","tap_pos"]
 
-    # Interne statische Variablen (sollen nur einmal gesetzt werden)
+    # Internal static parameters (initialized once per instance)
     tap_step_percent: float
     tap_neutral: float
     tap_side: str
 
-    # Interne Zustandsvariablen
+    # Internal state variables
     loading_percent: float = np.nan
     tap_pos: int = 0
     ratio_w1: float = np.nan   # calculated off-nominal ratio for ePHASORSIM
     ratio_w2: float = np.nan   # calculated off-nominal ratio for ePHASORSIM
     # --------------------------------------------------------------------------------------------------------
-    # Komponentenmethoden
+    # Component methods
     @property
     def value(self) -> float:
         """Returns the current transformer loading in percent."""
@@ -55,10 +55,10 @@ class Transformer2W(IModbusElement):
         return "%"
     
     # --------------------------------------------------------------------------------------------------------
-    # Hilfsmethoden: tap_pos <-> Ratio W1
+    # Helper methods: tap_pos <-> ratio_w1/ratio_w2
     def __get_trafo_params(self):
         """Reads static transformer parameters and validates optional ratio keys."""
-        # If "rw1" or "set_rW1" exists, then "rw2" or "set_rW2" must also exist...
+        # If "rW1"/"set_rW1" exists, then "rW2"/"set_rW2" must also exist.
         if "set_rW1" in self.values and not "set_rW2" in self.values:
             raise ValueError(f"TRF_VALUE_ERROR - Value error in transformer '{self.name}'. 'set_rW1' exists without 'set_rW2'")
         if "rW1" in self.values and not "rW2" in self.values:
@@ -76,9 +76,9 @@ class Transformer2W(IModbusElement):
         - ``tap_side='hv'``: ``ratio_w1 = f(tap_pos)``, ``ratio_w2 = 1``
         - ``tap_side='lv'``: ``ratio_w1 = 1``, ``ratio_w2 = f(tap_pos)``
 
-        :param tap_pos: Stufenschalterposition aus pandapower
+        :param tap_pos: Tap changer position from pandapower
         :type tap_pos: int
-        :return: Tupel (ratio_w1, ratio_w2)
+        :return: Tuple (ratio_w1, ratio_w2)
         :rtype: tuple[float, float]
         """
         if not hasattr(self, "tap_side"):
@@ -147,7 +147,7 @@ class Transformer2W(IModbusElement):
         return self.values
 
     # --------------------------------------------------------------------------------------------------------
-    # Interne Methoden
+    # Internal methods
     def __repr__(self):
         """Creates a compact text representation of the transformer.
 

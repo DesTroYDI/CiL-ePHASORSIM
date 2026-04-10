@@ -41,7 +41,7 @@ class Bus(IModbusElement):
     voltage_complex : complex = np.nan 
 
     # --------------------------------------------------------------------------------------------------------
-    # Komponentenmethoden
+    # Component methods
     @property
     def value(self) -> float:
         """Returns the magnitude of the currently calculated complex voltage."""
@@ -104,7 +104,7 @@ class Bus(IModbusElement):
         return self.values
 
     # --------------------------------------------------------------------------------------------------------
-    # Zusatzmethoden: Bus
+    # Bus helper methods
     def __create_complex_voltage(self, u_pu: float, u_angle_degree: float) -> complex:
         """
         Creates a complex voltage from magnitude and angle and stores it.

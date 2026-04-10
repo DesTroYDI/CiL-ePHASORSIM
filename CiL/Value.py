@@ -214,7 +214,7 @@ class ModbusValue:
         return self.value
 
     # --------------------------------------------------------------------------------------------------------
-    # Interne Methoden
+    # Internal methods
     def __decode(self, registers: list[int]) -> float:
         """
         Decodes a list of 16-bit Modbus registers into a numeric value.
@@ -225,12 +225,12 @@ class ModbusValue:
         - UINT32/INT32: Combine two registers (high word, low word)
         - FLOAT32: IEEE-754 single precision (two registers)
 
-        **Byte ordering important:** The OPAL-RT 4510 configuration MUST use 'BACD'!
-        This corresponds to the IEEE-754 standard floating-point format.
+        **Byte ordering important:** The OPAL-RT 4510 configuration MUST use 'BACD'.
 
-        **Register layout (32-bit example):**
-            registers[0] = high word (bits 31-16)
-            registers[1] = low word (bits 15-0)
+        **Register layout (32-bit values):**
+            - ``UINT32``/``INT32`` expect ``registers[0]`` as high word and ``registers[1]`` as low word.
+            - ``FLOAT32`` uses BACD ordering and is decoded from ``registers[1]`` (high word)
+              and ``registers[0]`` (low word).
 
         :param registers: List of 16-bit register values from the slave
                           - 1 element for 16-bit types (INT16, UINT16)
@@ -241,21 +241,21 @@ class ModbusValue:
         :raises ValueError: If data_type is not supported
         """
         # https://docs.python.org/3/library/struct.html
-        # UNSIGNED 16-BIT INTEGER (0 bis 65535)
+        # UNSIGNED 16-BIT INTEGER (0 to 65535)
         if self.data_type == DataType.UINT16:
             # Simple conversion because the register is already interpreted as unsigned
             return float(registers[0])
 
-        # SIGNED 16-BIT INTEGER (-32768 bis 32767)
+        # SIGNED 16-BIT INTEGER (-32768 to 32767)
         if self.data_type == DataType.INT16:
             return float(struct.unpack(">h", struct.pack(">H", registers[0]))[0])
 
-        # UNSIGNED 32-BIT INTEGER (0 bis 4.294.967.295)
+        # UNSIGNED 32-BIT INTEGER (0 to 4,294,967,295)
         if self.data_type == DataType.UINT32:
             raw = (registers[0] << 16) | registers[1]
             return float(raw)
 
-        # SIGNED 32-BIT INTEGER (-2.147.483.648 bis 2.147.483.647)
+        # SIGNED 32-BIT INTEGER (-2,147,483,648 to 2,147,483,647)
         if self.data_type == DataType.INT32:
             raw = (registers[0] << 16) | registers[1]
             return float(struct.unpack(">i", struct.pack(">I", raw))[0])
@@ -278,11 +278,11 @@ class ModbusValue:
         - UINT32/INT32: Split into high word and low word
         - FLOAT32: IEEE-754 single precision (two registers)
 
-        **Byte ordering important:** MUST match __decode() - BACD format!
+        **Byte ordering important:** MUST match ``__decode()`` (BACD for ``FLOAT32``).
 
-        **Register layout (32-bit example):**
-            result[0] = high word (bits 31-16)
-            result[1] = low word (bits 15-0)
+        **Register layout (32-bit values):**
+            - ``UINT32``/``INT32`` are encoded as ``[high_word, low_word]``.
+            - ``FLOAT32`` is encoded in BACD-compatible order as ``[low_word, high_word]``.
 
         :param value: Value to encode (interpreted as integer or float depending on data_type)
         :type value: float
@@ -292,20 +292,20 @@ class ModbusValue:
         :rtype: list[int]
         :raises ValueError: If data_type is not supported
         """
-        # UNSIGNED 16-BIT INTEGER (0 bis 65535)
+        # UNSIGNED 16-BIT INTEGER (0 to 65535)
         if self.data_type == DataType.UINT16:
             return [int(value)]
 
-        # SIGNED 16-BIT INTEGER (-32768 bis 32767)
+        # SIGNED 16-BIT INTEGER (-32768 to 32767)
         if self.data_type == DataType.INT16:
             return [struct.unpack(">H", struct.pack(">h", int(value)))[0]]
 
-        # UNSIGNED 32-BIT INTEGER (0 bis 4.294.967.295)
+        # UNSIGNED 32-BIT INTEGER (0 to 4,294,967,295)
         if self.data_type == DataType.UINT32:
             v = int(value)
             return [(v >> 16) & 0xFFFF, v & 0xFFFF]
 
-        # SIGNED 32-BIT INTEGER (-2.147.483.648 bis 2.147.483.647)
+        # SIGNED 32-BIT INTEGER (-2,147,483,648 to 2,147,483,647)
         if self.data_type == DataType.INT32:
             raw = struct.unpack(">I", struct.pack(">i", int(value)))[0]
             return [(raw >> 16) & 0xFFFF, raw & 0xFFFF]
