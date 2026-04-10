@@ -90,7 +90,7 @@ class CiLGenerator():
             dpg.delete_item("tab_modbus_adress", children_only=False)
             dpg.delete_item("tab_pp_reference", children_only=False)
 
-            # Modbus-Adresskonfiguration
+            # Modbus address configuration
             with dpg.tab(id="tab_modbus_adress",label="Modbus Address Configuration", parent="tab_control_chil"):
                 dpg.add_text("[*] - These columns are informational only and are not used in calculations.")
                 dpg.add_text("[Dictionary key] - Specifies the corresponding pandapower attribute (e.g., Generator -> 'p_mw').")

@@ -42,11 +42,11 @@ class Generator(IModbusElement):
     s_complex : complex = complex(np.nan, np.nan)
 
     # Status variables
-    p: float = np.nan       # Variable for the simplified representation of the load active power
-    q: float = np.nan       # Variable for the simplified representation of the load reactive power
+    p: float = np.nan       # Variable for the simplified representation of generator active power
+    q: float = np.nan       # Variable for the simplified representation of generator reactive power
     
     # --------------------------------------------------------------------------------------------------------
-    # Komponentenmethoden
+    # Component methods
     @property
     def value(self) -> float:
         """Returns the magnitude of the complex power in kVA."""
@@ -58,7 +58,7 @@ class Generator(IModbusElement):
         return "kVA"
 
     # --------------------------------------------------------------------------------------------------------
-    # Kommunikationsmethoden
+    # Communication methods
     async def read_async(self, mode: ReadMode = ReadMode.ALL) -> dict[str, ModbusValue | PandaPowerValue]:
         """
         Reads generator values and updates the internal power state.
@@ -96,7 +96,7 @@ class Generator(IModbusElement):
         return self.values
     
     # --------------------------------------------------------------------------------------------------------
-    # Zusatzmethoden: Generator
+    # Generator helper methods
     def start_visualize(self, _parent: int|str):
         """Extends the standard visualization with a second curve for profile values."""
         super().start_visualize(_parent)
@@ -128,7 +128,7 @@ class Generator(IModbusElement):
             dpg.set_value(self.uuid_data2, [x_visible, y_visible])
 
     # --------------------------------------------------------------------------------------------------------
-    # Interne Methoden
+    # Internal methods
     def __repr__(self):
         """
         Creates a compact text representation of the generator for debug output.

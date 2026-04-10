@@ -40,7 +40,7 @@ class Load(IModbusElement):
     q: float = np.nan       # Variable for the simplified representation of the load reactive power
     
     # --------------------------------------------------------------------------------------------------------
-    # Komponentenmethoden
+    # Component methods
     @property
     def value(self) -> float:
         """Returns the magnitude of the complex power in kVA."""
@@ -84,7 +84,7 @@ class Load(IModbusElement):
         return self.values
     
     # --------------------------------------------------------------------------------------------------------
-    # Interne Methoden
+    # Internal methods
     def __repr__(self):
         """
         Creates a compact text representation of the load for debug output.

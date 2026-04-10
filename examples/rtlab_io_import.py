@@ -2,20 +2,22 @@
 """
 rtlab_io_import.py
 
-Import der I/O-Pin-Konfiguration aus der eigens definierten Excel-CiL-Konfigrationsdatei. 
-Um zu verhindern, dass der Benutzer die Konfiguration der Modbus-Werte selber übernehmen muss, kann dieses Skript mittel der OPAL-RT Python-API (https://opal-rt.atlassian.net/wiki/spaces/PRD/pages/143983801/RT-LAB+API+Documentation)
-die Verknüpfung automatisiert aus der Excel-Datei hergestellen. 
+Imports the I/O pin configuration from a custom Excel CiL configuration file. 
+To avoid manual Modbus value mapping by the user, this script can use the OPAL-RT Python API (https://opal-rt.atlassian.net/wiki/spaces/PRD/pages/143983801/RT-LAB+API+Documentation)
+to create the mapping automatically from the Excel file. 
 
-!!! Wichtig: Dieses Skript muss in RT-LAB-Rechner im RT-LAB Dashboard ausgeführt werden
+!!! Important: This script must be executed on an RT-LAB workstation from the RT-LAB Dashboard
 
 @author: Groß, Hendrik
 """
 import RtlabApi 
 
 
-# Aktives Projekt zur Konfiguration holen
-GetActiveProjects --> TODO: Aktives Projekt holen
-
-ImportIOsConfiguration
-
-CreateConnection???
+# Retrieve the active project to configure.
+# TODO: replace with the corresponding RT-LAB API call, for example:
+# active_project = RtlabApi.GetActiveProjects()
+#
+# Then import the I/O configuration and create the RT-LAB connection.
+# TODO: add concrete API calls for:
+# - ImportIOsConfiguration(...)
+# - CreateConnection(...)

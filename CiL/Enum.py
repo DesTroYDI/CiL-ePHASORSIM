@@ -52,7 +52,7 @@ class DataType(Enum):
     INT32 = ("int32", 2)
     FLOAT32 = ("float32", 2)
 
-    # Konstruktor
+    # Constructor
     def __init__(self, label: str, register_count: int):
         """Stores the label and register count of the data type."""
         self.label = label

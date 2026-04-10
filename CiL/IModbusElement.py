@@ -198,7 +198,7 @@ class IModbusElement(ABC):
                     self.event_loop.run_until_complete(value.write())
             # If it is a value from the PandaPower network model, write that value
             elif isinstance(value, PandaPowerValue):
-                # DataFrame bestimmen (z.B. sgen)
+                # Resolve the target pandapower DataFrame (for example: sgen)
                 if hasattr(self.pp_net,self.df_pp):
                     df = getattr(self.pp_net,self.df_pp)
                     if key in df.columns:
